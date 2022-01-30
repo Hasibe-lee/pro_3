@@ -7,14 +7,14 @@ $(function () {
       /^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格'
     ],
     samepwd: function (value) {
-      let oldpwd = $('.layui-form [name="oldPwd"').val();
+      let oldpwd = $('.layui-form [name="oldPwd"]').val();
       if (value === oldpwd) {
         return '不能与原密码相同!!'
       }
     },
 
     repwd: function (value) {
-      let newpwd = $('.layui-form [name="newPwd"').val();
+      let newpwd = $('.layui-form [name="newPwd"]').val();
       if (value !== newpwd) {
         return '与新密码不一致！'
       }
