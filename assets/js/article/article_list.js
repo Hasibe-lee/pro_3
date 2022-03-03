@@ -26,7 +26,7 @@ $(function () {
   // 需要将请求参数对象提交到服务器
   var q = {
     pagenum: 1, // 页码值，默认请求第一页的数据
-    pagesize: 2, // 每页显示几条数据，默认每页显示2条
+    pagesize: 10, // 每页显示几条数据，默认每页显示2条
     cate_id: '', // 文章分类的 Id
     state: '' // 文章的发布状态
   }
@@ -132,10 +132,18 @@ $(function () {
       layer.close(index);
     });
   })
-
   $('tbody').on('click', '.btn-edit', function () {
-    
+
     let EditId = $(this).attr('data-id');
+    localStorage.setItem('article_id', EditId);
+    // 设置iframe-src的属性
+    parent.document.querySelector('iframe').setAttribute('src', '/article/art_pub.html');
     location.href = '/article/art_pub.html';
+    let dl = parent.document.querySelector('.layui_this');
+    dl.children[1].classList.remove('layui-this');
+    dl.children[2].classList.add('layui-this');
+
+
+    parent.document.querySelector('[href="/article/art_pub.html"]').classList.add('layui-this');
   })
 })

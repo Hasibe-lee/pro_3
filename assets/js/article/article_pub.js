@@ -55,6 +55,7 @@ $(function () {
     art_state = '草稿';
   })
 
+
   $('#form-pub').on('submit', function (e) {
     e.preventDefault();
     let fd = new FormData($(this)[0]);
@@ -87,9 +88,48 @@ $(function () {
         if (res.status !== 0) {
           return layer.msg('发布失败!')
         }
-        layer.msg(res.message);
+        layer.msg('发布成功');
         location.href = '/article/art_list.html'
       }
     })
   }
+
+  function getArticleinfo() {
+    let id = localStorage.getItem('article_id');
+    $.ajax({
+      method: 'GET',
+      url: '/my/article/' + id,
+      success: function (res) {
+        form.val('form-edit', res.data);
+        form.render('select');
+        console.log(res.data.content);
+        document.querySelector('[data-id=content]').innerHTML = res.data.content;
+        localStorage.removeItem('article_id');
+      }
+    })
+  }
+  let urlHref = window.location.href;
+  if (urlHref.includes('art_pub.html')) {
+    // console.log(parent.document.querySelector('iframe').getAttribute('src'));
+    getArticleinfo();
+  }
+
+  /*  function UpArticle(fd) {
+     $.ajax({
+       method: 'POST',
+       url: '/my/article/edit',
+       data: fd,
+       // 如果向服务器提交FormData 格式的数据 ，必须添加的两个配置项
+       contentType: false,
+       processData: false,
+       success: function (res) {
+         if (res.status !== 0) {
+           return layer.msg('更新失败!')
+         }
+         layer.msg('更新成功');
+         location.href = '/article/art_list.html'
+       }
+     })
+   } */
+
 })
